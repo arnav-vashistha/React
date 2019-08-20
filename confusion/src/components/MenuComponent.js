@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-
+import DishDetial from './DishDetailComponent';
 import {
-    Card, CardImg, CardImgOverlay, CardText, CardBody,
+    Card, CardImg, CardImgOverlay,
     CardTitle
 } from 'reactstrap';
 class Menu extends Component {
@@ -18,7 +18,7 @@ class Menu extends Component {
         this.setState({ selectedDish: dish });
     }
 
-    
+
 
     render() {
         return (
@@ -28,7 +28,7 @@ class Menu extends Component {
                         this.props.dishes.map((dish) => {
                             return (
                                 <div className="col-12 col-md-5 m-1" key={dish.id}>
-                                    <Card 
+                                    <Card
                                         onClick={() => this.onDishSelect(dish)}>
                                         <CardImg width="100%" src={dish.image} alt={dish.name} />
                                         <CardImgOverlay>
@@ -41,18 +41,15 @@ class Menu extends Component {
                     }
                 </div>
                 <div className="row">
-                    <div className="col-12 col-md-5 m-1">
-                        {this.state.selectedDish ? 
-                        <Card>
-                            <CardImg top src={this.state.selectedDish.image} alt={this.state.selectedDish.name} />
-                            <CardBody>
-                                <CardTitle>{this.state.selectedDish.name}</CardTitle>
-                                <CardText>{this.state.selectedDish.description}</CardText>
-                            </CardBody>
-                        </Card> :
-                         <div></div>
-                        }
-                    </div>
+
+                    {this.state.selectedDish ?
+                       
+                            <DishDetial dish={this.state.selectedDish} />
+                        
+                        :
+                        <div></div>
+                    }
+
                 </div>
             </div>
         );
