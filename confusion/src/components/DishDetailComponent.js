@@ -5,9 +5,17 @@ import {
 } from 'reactstrap';
 function DishDetail(props) {
     let { image, name, description, comments } = props.dish;
-    console.log(props);
-    return (
 
+    const listStyle = {
+        'listStyleType': 'none',
+        'fontSize': 'large',
+        'fontWeight': 600
+    }
+    const listItemStyle = {
+        'marginTop': '0.7em'
+    }
+
+    return (
         <Fragment>
             <div className="col-12 col-md-5 m-1">
                 <Card>
@@ -20,11 +28,11 @@ function DishDetail(props) {
             </div>
             <div className="col-12 col-md-5 m-1">
                 <h3> Comments</h3>
-                <ul className="comments-list">
+                <ul style={listStyle}>
                     {
                         comments.map(comment => {
                             return (
-                                <li key={comment.id} className="list-item">
+                                <li key={comment.id} style={listItemStyle}>
                                     {comment.comment}
                                     <br />
                                     --{comment.author} , {dateFormat(comment.date)}
