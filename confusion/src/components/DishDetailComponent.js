@@ -8,7 +8,7 @@ class DishDetail extends Component {
     render() {
 
         let { image, name, description, comments } = this.props.dish;
-
+console.log(this.props.dish);
         const listStyle = {
             'listStyleType': 'none',
             'fontSize': 'large',

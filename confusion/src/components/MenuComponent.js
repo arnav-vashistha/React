@@ -5,19 +5,7 @@ import {
 } from 'reactstrap';
 class Menu extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            selectedDish: null
-        }
-    }
-
-    onDishSelect(dish) {
-        this.setState({ selectedDish: dish });
-    }
-
-
+    
 
     render() {
         return (
