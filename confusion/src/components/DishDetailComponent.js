@@ -1,9 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, Breadcrumb, BreadcrumbItem
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import CommentForm from './CommentForm';
+
+function RenderComments({ comments }) {
+    return (
+        <Fragment>
+            {comments.map(comment => {
+                return (
+                    <li key={comment.id}>
+                        {comment.comment}
+                        <br />
+                        --{comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
+                    </li>
+                )
+            })}
+            <br />
+            <CommentForm />
+        </Fragment>
+    )
+}
+
 class DishDetail extends Component {
 
     render() {
@@ -11,14 +31,6 @@ class DishDetail extends Component {
         let { image, name, description } = this.props.dish;
         let { comments } = this.props;
         console.log(comments);
-        const listStyle = {
-            'listStyleType': 'none',
-            'fontSize': 'large',
-            'fontWeight': 600
-        }
-        const listItemStyle = {
-            'marginTop': '0.7em'
-        }
 
         return (
             <div className="container">
@@ -45,21 +57,10 @@ class DishDetail extends Component {
                     </div>
                     <div className="col-12 col-md-5 m-1">
                         <h3> Comments</h3>
-                        <ul style={listStyle}>
-                            {
-                                comments.map(comment => {
-                                    return (
-                                        <li key={comment.id} style={listItemStyle}>
-                                            {comment.comment}
-                                            <br />
-                                            --{comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
-                                        </li>
-                                    )
-                                })
-                            }
-                        </ul>
+                        <RenderComments comments={comments} />
                     </div>
                 </div>
+
             </div>
         )
 
