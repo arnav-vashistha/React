@@ -5,6 +5,7 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -27,6 +28,7 @@ class CommentForm extends Component {
         this.toggleModal();
     }
     render() {
+
         return (
             <Fragment>
                 <Button outline color="secondary" onClick={this.toggleModal}><span className="fa fa-pencil">{' '}Submit Comment</span></Button>
@@ -125,44 +127,64 @@ class DishDetail extends Component {
 
     render() {
 
-        let { image, name, description } = this.props.dish;
-        let { comments } = this.props;
-        console.log(comments);
-
-        return (
-            <div className="container">
-                <div className="row">
-                    <Breadcrumb>
-
-                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>{this.props.dish.name}</BreadcrumbItem>
-                    </Breadcrumb>
-                    <div className="col-12">
-                        <h3>{this.props.dish.name}</h3>
-                        <hr />
+        if (this.props.isLoading) {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <Loading />
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-12 col-md-5 m-1">
-                        <Card>
-                            <CardImg top src={image} alt={name} />
-                            <CardBody>
-                                <CardTitle>{name}</CardTitle>
-                                <CardText>{description}</CardText>
-                            </CardBody>
-                        </Card>
-                    </div>
-                    <div className="col-12 col-md-5 m-1">
-                        <h3> Comments</h3>
-                        <RenderComments comments={comments}
-                            addComment={this.props.addComment}
-                            dishId={this.props.dish.id} />
+            );
+        }
+
+        else if (this.props.errMess) {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <h4>{this.props.errMess}</h4>
                     </div>
                 </div>
+            );
+        }
 
-            </div>
-        )
+        else if (this.props.dish != null) {
+            let { image, name, description } = this.props.dish;
+            let { comments } = this.props;
+            console.log(comments);
+            return (
+                <div className="container">
+                    <div className="row">
+                        <Breadcrumb>
 
+                            <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                            <BreadcrumbItem active>{this.props.dish.name}</BreadcrumbItem>
+                        </Breadcrumb>
+                        <div className="col-12">
+                            <h3>{this.props.dish.name}</h3>
+                            <hr />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12 col-md-5 m-1">
+                            <Card>
+                                <CardImg top src={image} alt={name} />
+                                <CardBody>
+                                    <CardTitle>{name}</CardTitle>
+                                    <CardText>{description}</CardText>
+                                </CardBody>
+                            </Card>
+                        </div>
+                        <div className="col-12 col-md-5 m-1">
+                            <h3> Comments</h3>
+                            <RenderComments comments={comments}
+                                addComment={this.props.addComment}
+                                dishId={this.props.dish.id} />
+                        </div>
+                    </div>
+
+                </div>
+            )
+        }
     }
 }
 
