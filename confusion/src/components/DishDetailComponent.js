@@ -6,6 +6,7 @@ import {
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -167,7 +168,7 @@ class DishDetail extends Component {
                     <div className="row">
                         <div className="col-12 col-md-5 m-1">
                             <Card>
-                                <CardImg top src={image} alt={name} />
+                                <CardImg top src={baseUrl + image} alt={name} />
                                 <CardBody>
                                     <CardTitle>{name}</CardTitle>
                                     <CardText>{description}</CardText>
